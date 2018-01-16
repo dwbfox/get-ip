@@ -1,27 +1,15 @@
-'''
-	Author: Biru
-'''
-
-import re
-import urllib2
-
 def get_ip():
-
+    import re
+    import urllib.request as req
     try:
-        data = urllib2.urlopen('http://checkip.dyndns.org/').read()
-        match = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}').search(data)
+        data = req.urlopen('http://checkip.dyndns.org/').read()
+        match = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}').search(data.decode('utf-8'))
         return match.group(0)
-    except:
-    	return False
+    except Exception as err:
+    	raise Exception("Error: {}".format(err))
 
 
 
 
 if __name__ == '__main__':
-
-    address = get_ip()
-
-    if address:
-        print "Your current IP address is: %s" % address
-    else:
-        print "Unable to determine your IP address"
+    print ("Your current IP address is: %s" % get_ip())
